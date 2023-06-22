@@ -5,14 +5,13 @@ all:
 	@bash srcs/requirements/wordpress/tools/make_dir.sh
 	@docker compose -f ./srcs/docker-compose.yml --env-file ./srcs/.env up -d
 
-build:
-	@printf "Building configuration ${name}...\n"
-	@bash srcs/requirements/wordpress/tools/make_dir.sh
-	@docker compose -f ./srcs/docker-compose.yml --env-file ./srcs/.env up -d --build
+up:
+	@print "Up all stoped container${name}...\n"
+	@docker compose -f ./srcs/docker-compose.yml --env-file ./srcs/.env up -d
 
 down:
 	@printf "Stopping configuration ${name}...\n"
-	@docker compose -f ./srcs/docker-compose.yml --env-file ./srcs/.env down
+	@docker compose -f ./srcs/docker-compose.yml --env-file ./srcs/.env down -v
 
 re: fclean
 	@printf "Rebuild configuration ${name}...\n"
@@ -26,8 +25,7 @@ clean: down
 
 fclean:
 	@printf "Total clean of all configurations docker\n"
-	@docker compose -f ./srcs/docker-compose.yml --env-file ./srcs/.env down
-	#@docker stop $$(docker ps -qa)
+	@docker compose -f ./srcs/docker-compose.yml --env-file ./srcs/.env down -v
 	@docker system prune --volumes
 	@docker network prune
 	@docker volume prune -a
