@@ -11,5 +11,4 @@ EOF
 
 # run init.sql
 /usr/bin/mysqld --user=mysql --bootstrap < /tmp/create_db_sql
-rm -f /tmp/create_db_sql
 /usr/bin/mysqld -u mysql

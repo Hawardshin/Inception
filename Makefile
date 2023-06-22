@@ -27,7 +27,7 @@ clean: down
 fclean:
 	@printf "Total clean of all configurations docker\n"
 	@docker compose -f ./srcs/docker-compose.yml --env-file ./srcs/.env down
-#	@docker stop $$(docker ps -qa)
+	#@docker stop $$(docker ps -qa)
 	@docker system prune --volumes
 	@docker network prune
 	@docker volume prune -a
