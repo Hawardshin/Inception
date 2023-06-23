@@ -1,7 +1,7 @@
 FROM alpine:3.17
 
-RUN apk update && apk upgrade 
-
+RUN apk update && apk upgrade
+RUN apk add --no-cache tini
 RUN apk add php81-fpm \
     php81 \
     php81-mysqli \
@@ -18,9 +18,9 @@ RUN apk add php81-fpm \
     php81-phar \
     php81-iconv \
     mariadb-client \
-    curl 
+    curl
 
-WORKDIR /tmp 
+WORKDIR /tmp
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 RUN mv wp-cli.phar /usr/local/bin
 RUN chmod +x /usr/local/bin/wp-cli.phar
@@ -34,7 +34,8 @@ RUN sed -i 's/listen = 127.0.0.1:9000/listen = 0.0.0.0:9000/g' /etc/php81/php-fp
 
 COPY ./conf/wp.sh /tmp/wp.sh
 RUN chmod +x /tmp/wp.sh
-
 EXPOSE 9000
+ENTRYPOINT ["/sbin/tini", "--"]
+#forground shell session not deamon
+CMD ["sh", "/tmp/wp.sh"]
 
-ENTRYPOINT [ "sh", "/tmp/wp.sh" ]

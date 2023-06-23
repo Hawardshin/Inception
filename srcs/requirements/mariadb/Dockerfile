@@ -4,6 +4,7 @@ FROM alpine:3.17
 RUN mkdir -p /run/mysqld
 RUN mkdir -p /var/lib/mysql
 RUN apk update && apk upgrade && apk add --no-cache mariadb mariadb-client
+RUN apk add --no-cache tini
 
 COPY ./conf/create_db.sh /tmp/create_db.sh
 RUN chown -R mysql:mysql /run/mysqld
@@ -27,5 +28,6 @@ RUN mysql_install_db --user=mysql \
 EXPOSE 3306
 
 RUN chmod +x /tmp/create_db.sh
+ENTRYPOINT ["/sbin/tini", "--"]
 
-ENTRYPOINT ["sh", "/tmp/create_db.sh"]
+CMD ["sh", "/tmp/create_db.sh"]

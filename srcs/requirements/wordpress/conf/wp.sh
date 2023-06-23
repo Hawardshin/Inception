@@ -13,5 +13,6 @@ if [ ! -f "/var/www/html/index.php" ]; then
 # wordpress 
   wp user create $WP_USER_NAME $WP_USER_MAIL --user_pass=$WP_USER_PASS
 fi
+
 #forground shell session not deamon
 php-fpm81 -F
