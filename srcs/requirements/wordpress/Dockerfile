@@ -38,4 +38,3 @@ EXPOSE 9000
 ENTRYPOINT ["/sbin/tini", "--"]
 #forground shell session not deamon
 CMD ["sh", "/tmp/wp.sh"]
-
