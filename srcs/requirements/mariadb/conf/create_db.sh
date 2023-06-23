@@ -1,4 +1,8 @@
 #!bin/sh
+
+#make user and
+#set all permission
+#set root passwd
 cat > /tmp/create_db_sql << EOF
 USE mysql;
 FLUSH PRIVILEGES;
