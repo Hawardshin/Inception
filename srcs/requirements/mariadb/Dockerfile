@@ -1,7 +1,9 @@
 FROM alpine:3.17
 
 #for mysql socket file
+#MariaDB가 소켓 파일을 저장하는 위치
 RUN mkdir -p /run/mysqld
+#data 저장 폴더
 RUN mkdir -p /var/lib/mysql
 RUN apk update && apk upgrade && apk add --no-cache mariadb mariadb-client
 RUN apk add --no-cache tini
@@ -11,8 +13,10 @@ RUN chown -R mysql:mysql /run/mysqld
 
 RUN chmod 777 /var/run/mysqld; \
     { echo '[mysqld]'; \
+      #호스트 캐시 기능을 비활성화
       echo 'skip-host-cache'; \
       #dns reverse lookup -> vaildate ip address off
+      #DNS 역방향 조회를 비활성화
       echo 'skip-name-resolve'; \
       # all ip connection allow
       echo 'bind-address=0.0.0.0'; \
@@ -21,6 +25,7 @@ RUN chmod 777 /var/run/mysqld; \
 RUN  sed -i "s|skip-networking|skip-networking=0|g" /etc/my.cnf.d/mariadb-server.cnf
 #mariadb directory init
 # user : mysql , datadir : /var/lib/mysql ,
+#MariaDB와 관련된 데몬과 클라이언트를 설치하면, 시스템 상에 필요한 내용들을 자동으로 만들어주는 식의 일련의 과정을 수행하는 mysql-install-db 활용
 RUN mysql_install_db --user=mysql \
 								--basedir=/usr \
 								--datadir=/var/lib/mysql \
