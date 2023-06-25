@@ -6,7 +6,7 @@ all:
 	@docker compose -f ./srcs/docker-compose.yml --env-file ./srcs/.env up -d
 
 up:
-	@print "Up all stoped container${name}...\n"
+	@printf "Up all stoped container${name}...\n"
 	@docker compose -f ./srcs/docker-compose.yml --env-file ./srcs/.env up -d
 
 down:
