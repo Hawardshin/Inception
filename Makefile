@@ -20,10 +20,10 @@ re: fclean
 clean: down
 	@printf "Cleaning configuration ${name}...\n"
 	@docker system prune -a
-	@sudo rm -rf ~/data/wordpress/*
-	@sudo rm -rf ~/data/mariadb/*
+	@sudo rm -rf ~/data/
 
-fclean:
+
+fclean: clean
 	@printf "Total clean of all configurations docker\n"
 	@docker compose -f ./srcs/docker-compose.yml --env-file ./srcs/.env down -v
 	@docker system prune --volumes
